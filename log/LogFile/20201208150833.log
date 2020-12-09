@@ -1,0 +1,55 @@
+[2020-12-08 15:08:33] DEBUG ：这是setupclass 
+[2020-12-08 15:08:33] INFO  ：用例  [ test1 (test_1.testcase1.Test) ]  开始执行... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tt('self', 'm', 's') | <module:autotest.common.request_op>]  Running... 
+[2020-12-08 15:08:33] DEBUG ：tt入参：{'args': '', 'kwargs': {'m': '498646', 's': 'mmmmm'}} 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) | <module:autotest.common.request_op>]  Running... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) ]  Successful! 
+[2020-12-08 15:08:33] INFO  ：函数  [ tt('self', 'm', 's') ]  Successful! 
+[2020-12-08 15:08:33] ERROR ：用例  [ test1 (test_1.testcase1.Test) ]  执行失败：
+Traceback (most recent call last):
+  File "D:\Install\python3.7\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "D:\Install\python3.7\lib\unittest\case.py", line 628, in run
+    testMethod()
+  File "E:\PyProject\autotest\testsuit\test_1\testcase1.py", line 39, in test1
+    self.fail(msg="这就失败了")
+  File "D:\Install\python3.7\lib\unittest\case.py", line 693, in fail
+    raise self.failureException(msg)
+AssertionError: 这就失败了
+
+
+
+ 
+[2020-12-08 15:08:33] INFO  ：用例  [ test2 (test_1.testcase1.Test) ]  开始执行... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tt('self', 'm', 's') | <module:autotest.common.request_op>]  Running... 
+[2020-12-08 15:08:33] DEBUG ：tt入参：{'args': ('mmmmm', 'ssss'), 'kwargs': {}} 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) | <module:autotest.common.request_op>]  Running... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) ]  Successful! 
+[2020-12-08 15:08:33] INFO  ：函数  [ tt('self', 'm', 's') ]  Successful! 
+[2020-12-08 15:08:33] INFO  ：用例  [ test2 (test_1.testcase1.Test) ]  执行成功!
+
+
+ 
+[2020-12-08 15:08:33] INFO  ：用例  [ test3 (test_1.testcase1.Test) ]  开始执行... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) | <module:autotest.common.request_op>]  Running... 
+[2020-12-08 15:08:33] INFO  ：函数  [ tr('self',) ]  Successful! 
+[2020-12-08 15:08:33] INFO  ：用例  [ test3 (test_1.testcase1.Test) ]  执行成功!
+
+
+ 
+[2020-12-08 15:08:33] DEBUG ：这是teardownclass 
+[2020-12-08 15:08:33] INFO  ：用例  [ test11 (test_1.testcase1.Test2) ]  开始执行... 
+[2020-12-08 15:08:35] INFO  ：用例  [ test11 (test_1.testcase1.Test2) ]  执行成功!
+
+
+ 
+[2020-12-08 15:08:35] INFO  ：用例  [ test22 (test_1.testcase1.Test2) ]  开始执行... 
+[2020-12-08 15:08:35] DEBUG ：用例  [ test22 (test_1.testcase1.Test2) ]  跳过... Skip Of Reason：tiao tiao
+
+
+ 
+[2020-12-08 15:08:35] INFO  ：用例  [ test33 (test_1.testcase1.Test2) ]  开始执行... 
+[2020-12-08 15:08:35] INFO  ：用例  [ test33 (test_1.testcase1.Test2) ]  执行成功!
+
+
+ 
