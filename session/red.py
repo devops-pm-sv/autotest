@@ -1,7 +1,7 @@
 # encoding: utf-8
 # @Time    : 2020/12/11 16:09
 # @Author  : zhoubo
-# @dsc     :红警系统的session
+# @dsc     :红警系统session
 import requests
 import json
 from log.log import LogSet
