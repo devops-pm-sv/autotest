@@ -5,12 +5,12 @@
 import pymysql
 import configparser
 from log.log import LogSet
-from common.request_op import Other
 
-_db_cfg_path = "E:\PyProject\\autotest\conf.ini"
+
+_DB_CFG_PATH = "E:\PyProject\\autotest\conf.ini"
 # 读取数据库配置
 cf = configparser.ConfigParser()
-cf.read(_db_cfg_path)
+cf.read(_DB_CFG_PATH)
 HOST = cf.get("mysql_shenfu", "host")
 PORT = cf.get("mysql_shenfu", "port")
 USER = cf.get("mysql_shenfu", "user")
@@ -34,7 +34,7 @@ class DataBase(object):
 
 
     # 查询sql
-    def Query(self,sql) -> list:
+    def query(self,sql) -> list:
         cur=self.connection.cursor()
         cur.execute(sql)
         resList=cur.fetchall()
@@ -43,7 +43,7 @@ class DataBase(object):
 
 
     # 非查询的sql
-    def ExecSql(self, sql) -> None:
+    def execSql(self, sql) -> None:
         cur=self.connection.cursor()
         cur.execute(sql)
         self.conn.commit()
@@ -55,7 +55,7 @@ class DataBase(object):
 if __name__ == '__main__':
     db = DataBase("scjrj_test")
     sql = "select * from bbd_test"
-    r = db.Query(sql)
+    r = db.query(sql)
     print(r)
     s = [i["id"] for i in r]
     print(s)

@@ -99,7 +99,7 @@ class LogSet(object):
         def decorator(*args, **kwargs):
             # 获取形参
             parse = locals()
-            LogSet.info(msg=f"""函数  [ {orig_func.__name__}{str(orig_func.__code__.co_varnames).replace("'","")} | MODULE:{orig_func.__module__}]  Running...""")
+            LogSet.info(msg=f"""函数  [ {orig_func.__name__}{inspect.signature(orig_func)} | MODULE:{orig_func.__module__}]  Running...""")
             # 封装实参
             arg = parse["args"][1:] if len(parse["args"])>1 else ""
             karg = parse["kwargs"]
@@ -109,10 +109,10 @@ class LogSet(object):
                 LogSet.debug(msg=f"{orig_func.__name__} 函数实参：{value}")
             try:
                 result = orig_func(*args, **kwargs)
-                LogSet.info(msg=f"函数  [ {orig_func.__name__}{orig_func.__code__.co_varnames} ]  Successful!")
+                LogSet.info(msg=f"函数  [ {orig_func.__name__}{inspect.signature(orig_func)} ]  Successful!")
                 return result
             except Exception as e:
-                LogSet.error(msg=f"函数  [ {orig_func.__name__}{orig_func.__code__.co_varnames} ]  Fail!")
+                LogSet.error(msg=f"函数  [ {orig_func.__name__}{inspect.signature(orig_func)} ]  Fail!")
                 raise
         return decorator
 
