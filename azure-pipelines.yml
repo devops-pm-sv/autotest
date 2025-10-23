@@ -1,36 +1,14 @@
-trigger:
-- master
+trigger: none
 
 stages:
-- stage: Build
+- stage: ManualApproval
+  displayName: "Manual Approval Only"
   jobs:
-  - job: BuildJob
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - script: echo "Step 1 Build something"
-      displayName: "Build step"
-
-- stage: Approval
-  dependsOn: Build
-  jobs:
-  - job: ManualApproval
-    displayName: "Manual approval"
-    pool: server         # 🔥 关键点：必须使用 server pool
+  - job: Approval
+    pool: server     # ✅ 运行在 Azure DevOps 服务器，不分配 agent
     steps:
     - task: ManualValidation@0
       displayName: "Manual approval"
       inputs:
         instructions: "Please approve to continue."
-        onTimeout: 'resume'     # 超时自动继续，不会失败
-        notifyUsers: ''         # 可留空或填写审批人邮箱
-
-- stage: Deploy
-  dependsOn: Approval
-  jobs:
-  - job: DeployJob
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - script: echo "Step 3 Deploy after approval"
-      displayName: "Deploy step"
+        onTimeout: 'resume'
