@@ -1,14 +1,14 @@
-trigger: none
 
 stages:
 - stage: ManualApproval
   displayName: "Manual Approval Only"
   jobs:
   - job: Approval
-    pool: server     # ✅ 运行在 Azure DevOps 服务器，不分配 agent
+    pool: server
     steps:
     - task: ManualValidation@0
       displayName: "Manual approval"
       inputs:
+        notifyUsers: 'zhoubo_52@163.com'
         instructions: "Please approve to continue."
         onTimeout: 'resume'
