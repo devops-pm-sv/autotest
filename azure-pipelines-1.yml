@@ -1,0 +1,14 @@
+
+stages:
+- stage: ManualApproval
+  displayName: "Manual Approval Only"
+  jobs:
+  - job: Approval
+    pool: server
+    steps:
+    - task: ManualValidation@0
+      displayName: "Manual approval"
+      inputs:
+        notifyUsers: 'zhoubo_52w@163.com'
+        instructions: "Please approve to continue."
+        onTimeout: 'resume'
