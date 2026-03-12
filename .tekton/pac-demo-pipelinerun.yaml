@@ -3,9 +3,10 @@ kind: PipelineRun
 metadata:
   name: hello-pac-run
   annotations:
-    pipelinesascode.tekton.dev/on-event: "push, pull_request"   # 指定触发事件
+    pipelinesascode.tekton.dev/on-event: "[push, pull_request]"      # 加方括号
+    pipelinesascode.tekton.dev/on-target-branch: "[master, main]"    # 必须有这个
 spec:
-  pipelineSpec:               # 直接在 PipelineRun 内定义 pipeline
+  pipelineSpec:
     tasks:
       - name: run-hello
         taskSpec:
