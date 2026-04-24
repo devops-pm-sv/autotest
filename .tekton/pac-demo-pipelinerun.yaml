@@ -12,7 +12,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: registry.access.redhat.com/ubi8/ubi-minimal
+              image: registry.access.redhat.com/ubi8/ubi-minimal的
               script: |
                 #!/bin/sh
                 echo "Hello from Pipelines as Code!"
