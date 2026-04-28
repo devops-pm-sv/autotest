@@ -28,3 +28,4 @@ jobs:
             -p git-url="${GIT_URL}" \
             -p git-revision="${GIT_SHA}" \
             --showlog
+
