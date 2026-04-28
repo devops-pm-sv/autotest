@@ -1,22 +1,30 @@
-name: ARC Smoke
+name: Trigger Tekton PipelineRun
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    branches: [master]
 
 jobs:
-  smoke:
-    runs-on: arc-runner-set      # 本文当前已验证的最稳妥写法：直接写 runnerScaleSetName 单字符串
+  trigger-tekton:
+    runs-on: my-runners
     steps:
-      - name: runner identity
-        # 优先使用 GitHub 提供的环境变量与 shell 内置变量，避免依赖
-        # 某个基础镜像是否恰好带了 `hostname` 之类的 OS 命令；这里直接
-        # 用 ${HOSTNAME} 更稳。
+      - name: start tekton pipeline
+        # `env` carries the platform-specific values for this trigger.
+        # Defaults match the prerequisites above; override here (or
+        # promote to GitHub repo variables for multi-pipeline use).
+        env:
+          TEKTON_NS: arc-runners
+          PIPELINE_NAME: gh-trigger-demo
+          GIT_URL: ${{ github.server_url }}/${{ github.repository }}
+          GIT_SHA: ${{ github.sha }}
         run: |
-          echo "runner_name: ${RUNNER_NAME:-unknown}"
-          echo "hostname:    ${HOSTNAME:-unknown}"
-          echo "workspace:   ${GITHUB_WORKSPACE:-unknown}"
-          echo "job:         ${GITHUB_JOB:-unknown}"
-          echo "whoami:      $(whoami)"
-          id
-          echo "pwd:         $(pwd)"
+          # 直接使用 runner 镜像内置的 `tkn` CLI 触发 Pipeline。
+          # `tkn pipeline start` 会创建一个由服务端生成名字的
+          # PipelineRun；`--showlog` 则会持续跟踪日志直到执行结束，
+          # 不再需要单独渲染 manifest、跑 kubectl create，或额外
+          # 再接一个 `tkn pr logs -f`。
+          tkn pipeline start "${PIPELINE_NAME}" \
+            -n "${TEKTON_NS}" \
+            -p git-url="${GIT_URL}" \
+            -p git-revision="${GIT_SHA}" \
+            --showlog
