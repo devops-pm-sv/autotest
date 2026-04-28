@@ -13,7 +13,7 @@ jobs:
         # Defaults match the prerequisites above; override here (or
         # promote to GitHub repo variables for multi-pipeline use).
         env:
-          TEKTON_NS: arc-runners
+          TEKTON_NS: demo-1
           PIPELINE_NAME: gh-trigger-demo
           GIT_URL: ${{ github.server_url }}/${{ github.repository }}
           GIT_SHA: ${{ github.sha }}
