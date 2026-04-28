@@ -6,9 +6,9 @@ on:
 
 jobs:
   trigger-tekton:
-    runs-on: my-runners
+    runs-on: arc-runner-set
     steps:
-      - name: start tekton pipeline
+      - name: start tekton pipelinecangk
         # `env` carries the platform-specific values for this trigger.
         # Defaults match the prerequisites above; override here (or
         # promote to GitHub repo variables for multi-pipeline use).
