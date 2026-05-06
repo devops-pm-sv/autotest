@@ -15,4 +15,4 @@ spec:
               image: registry.access.redhat.com/ubi8/ubi-minimal
               script: |
                 #!/bin/sh
-                echo "Hello from Pipelines as Code!"
+                echo "Hello from Pipelines as Code!p"
