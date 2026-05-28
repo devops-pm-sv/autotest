@@ -1,0 +1,96 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: autotest-webhook-connector-
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[push]"
+    pipelinesascode.tekton.dev/on-target-branch: "[master]"
+    integrations.tekton.dev/integrations: |
+      - name: "autotest-harbor"
+        interface:
+          name: harborociartifact
+        connectorRef:
+          name: 241-harbor
+          namespace: demo-1
+          apiVersion: connectors.alauda.io/v1alpha1
+          setAtRuntime: false
+        attributes:
+          - name: repository-address
+            value: 192-168-132-241-harbor.alaudatech.net/orbitmall/frontend
+            refPath: []
+            bindings: []
+            param: null
+            transform: null
+          - name: tags
+            value:
+              - main
+            refPath: []
+            bindings: []
+            param: null
+            transform: null
+          - name: artifacts
+            value:
+              - 192-168-132-241-harbor.alaudatech.net/orbitmall/frontend:main
+            refPath: []
+            bindings: []
+            param: null
+            transform: null
+        params:
+          - name: project
+            setAtRuntime: false
+            value: orbitmall
+          - name: repository
+            setAtRuntime: false
+            value: orbitmall/frontend
+          - name: tags
+            setAtRuntime: false
+            value:
+              - main
+        workspaces:
+          - name: registry-config
+            workspace: registry-config
+            refPath:
+              - pipelineRuns.0.workspaces.registry-config
+        configuration:
+          connectors:
+            - apiVersion: connectors.alauda.io/v1alpha1
+              name: 241-harbor
+              namespace: demo-1
+spec:
+  pipelineSpec:
+    workspaces:
+      - name: registry-config
+    tasks:
+      - name: verify-connector
+        workspaces:
+          - name: registry-config
+            workspace: registry-config
+        taskSpec:
+          workspaces:
+            - name: registry-config
+          steps:
+            - name: check
+              image: registry.alauda.cn:60070/devops/tektoncd/hub/run-script:v3.21
+              script: |
+                #!/usr/bin/env sh
+                set -eu
+                test -d "$(workspaces.registry-config.path)"
+                echo "connector integration workspace mounted"
+                echo "connector=demo-1/241-harbor"
+  workspaces:
+    - name: registry-config
+      csi:
+        driver: connectors-csi
+        readOnly: true
+        volumeAttributes:
+          configuration.names: registry-config,!ca.cert
+          connector.name: 241-harbor
+          connector.namespace: demo-1
+          connectors: demo-1/241-harbor
+          token.expiration: 30m
+  taskRunTemplate:
+    serviceAccountName: default
+    podTemplate:
+      securityContext:
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
