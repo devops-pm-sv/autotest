@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: autotest-webhook-pr-
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[pull_request]"
+    pipelinesascode.tekton.dev/on-target-branch: "[master]"
+spec:
+  pipelineRef:
+    name: pac-ref-type-pipeline
+  params:
+    - name: trigger-type
+      value: "github-webhook-pull-request"
+    - name: message
+      value: "devops-pm-sv/autotest webhook mode pull request trigger"
+    - name: source-repo
+      value: "{{ repo_url }}"
+    - name: source-branch
+      value: "{{ source_branch }}"
+    - name: target-branch
+      value: "{{ target_branch }}"
+    - name: revision
+      value: "{{ revision }}"
+    - name: pr-number
+      value: "{{ pull_request_number }}"
+  taskRunTemplate:
+    serviceAccountName: default
+    podTemplate:
+      securityContext:
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch

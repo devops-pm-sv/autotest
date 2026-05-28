@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: autotest-webhook-comment-
+  annotations:
+    pipelinesascode.tekton.dev/on-comment: "^/pac-webhook-comment$"
+spec:
+  pipelineRef:
+    name: pac-ref-type-pipeline
+  params:
+    - name: trigger-type
+      value: "github-webhook-comment"
+    - name: message
+      value: "devops-pm-sv/autotest webhook mode comment trigger"
+    - name: source-repo
+      value: "{{ repo_url }}"
+    - name: source-branch
+      value: "{{ source_branch }}"
+    - name: target-branch
+      value: "{{ target_branch }}"
+    - name: revision
+      value: "{{ revision }}"
+    - name: pr-number
+      value: "comment-trigger"
+  taskRunTemplate:
+    serviceAccountName: default
+    podTemplate:
+      securityContext:
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
