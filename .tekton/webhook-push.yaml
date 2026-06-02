@@ -10,9 +10,9 @@ spec:
     name: pac-ref-type-pipeline
   params:
     - name: trigger-type
-      value: "github-webhook-push"
+      value: github-webhook-push
     - name: message
-      value: "devops-pm-sv/autotest webhook mode push trigger"
+      value: devops-pm-sv/autotest webhook push trigger
     - name: source-repo
       value: "{{ repo_url }}"
     - name: source-branch

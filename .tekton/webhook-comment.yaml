@@ -4,14 +4,15 @@ metadata:
   generateName: autotest-webhook-comment-
   annotations:
     pipelinesascode.tekton.dev/on-comment: "^/pac-webhook-comment$"
+    pipelinesascode.tekton.dev/on-target-branch: "[master]"
 spec:
   pipelineRef:
     name: pac-ref-type-pipeline
   params:
     - name: trigger-type
-      value: "github-webhook-comment"
+      value: github-webhook-comment
     - name: message
-      value: "devops-pm-sv/autotest webhook mode comment trigger"
+      value: devops-pm-sv/autotest webhook comment trigger
     - name: source-repo
       value: "{{ repo_url }}"
     - name: source-branch
@@ -21,7 +22,7 @@ spec:
     - name: revision
       value: "{{ revision }}"
     - name: pr-number
-      value: "comment-trigger"
+      value: "{{ pull_request_number }}"
   taskRunTemplate:
     serviceAccountName: default
     podTemplate:
