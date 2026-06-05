@@ -7,7 +7,14 @@ metadata:
     pipelinesascode.tekton.dev/on-target-branch: "[master]"
 spec:
   pipelineRef:
-    name: pac-ref-type-pipeline
+    resolver: cluster
+    params:
+    - name: kind
+      value: pipeline
+    - name: name
+      value: pac-ref-type-pipeline
+    - name: namespace
+      value: demo-1
   params:
     - name: trigger-type
       value: github-webhook-pull-request
